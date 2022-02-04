@@ -8,10 +8,16 @@ let dbConnect = require('./mongodb_connection.js');
 // connecting to mongodb
 dbConnect();
 
-app.get('/',()=>
+app.get('/api/auth',(req,res)=>
 {
-    console.log('Home page');
+    res.send('auth');
 })
+
+app.get('/api/notes',(req,res)=>
+{
+    res.send('notes');
+})
+
 
 app.listen(3000,()=>
 {

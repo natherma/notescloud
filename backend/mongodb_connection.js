@@ -7,11 +7,14 @@ const connectionUrl = process.env.CONNECTION_URL;
 
 const connectToMongo = () =>
 {
-    mongoose.connect(connectionUrl,()=>
-{
-    console.log('connected to mongodb ');
-})
-
+    mongoose.connect(connectionUrl).then(()=>
+    {
+        console.log("connected to mongodb")
+    })
+    .catch(error=>
+        {
+            console.log(error)
+        })
 }
 
 module.exports = connectToMongo;
