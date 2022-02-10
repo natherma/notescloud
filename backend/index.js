@@ -27,6 +27,7 @@ app.use(express.json());
 
 // End points of our App
 
+// Auth endpoints
 // endpoint for creating user
 app.post('/api/auth/createuser',[
     body('username').isLength({min:3}),
@@ -48,7 +49,7 @@ app.post('/api/auth/createuser',[
     });
     user.save().then(()=>
     {
-        var token = jwt.sign({ id: user.id }, 'shhhhh');
+        var token = jwt.sign({ id: user.id },process.env.JWTSECRET);
         res.json({token:token});
     })
     .catch(e=>
@@ -58,6 +59,59 @@ app.post('/api/auth/createuser',[
     
 })
 
+// login endpoint
+app.post('/api/auth/login',[
+    body('email','Enter a valid Email').isEmail(),
+    body('password',"password can't be empty").exists()
+    // using express-validator
+],async(req,res)=>
+{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    let {email,password} = req.body;
+    try
+    {
+        let user = await User.findOne({email});
+        if(!user)
+        {
+             return res.status(400).json({message:"enter correct credentails"});
+        }
+
+        const passwordcompare = await bcrypt.compare(password,user.password);
+        if(!passwordcompare)
+        {
+           return res.status(400).json({message:"enter correct credentails"});
+        }
+        var token = jwt.sign({ id: user.id },process.env.JWTSECRET);
+        res.json({token:token});
+    }
+    catch(error)
+    {
+        res.status(500).json({error:error.message});
+    }
+})
+
+// logedin user credentails
+app.get('/api/auth/getuser',async (req,res)=>
+{
+    let token = req.query.token;
+    try
+    {
+        let data_id = jwt.verify(token,process.env.JWTSECRET).id;
+        let user = await User.findById(data_id).select('-password');
+        res.send(user); 
+    }
+    catch(e)
+    {
+       res.status(401).json({message:e});
+    }
+})
+
+
+
+// notes endpoint
 
 app.get('/api/notes',(req,res)=>
 {
