@@ -4,6 +4,11 @@ const schema = mongoose.Schema;
 
 const NotesSchema = new schema(
     {
+        user:
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'user'
+        },
         title:{
             type:String,
             required:true
@@ -14,7 +19,7 @@ const NotesSchema = new schema(
         },
         tag:{
             type:String,
-            default:general
+            default:"general"
         },
         
         date:{

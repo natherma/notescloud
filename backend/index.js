@@ -21,6 +21,8 @@ dbConnect();
 
 // requiring mongodb module
 const User = require('./modules/Users');
+const Notes = require('./modules/Notes');
+
 
 // middleware
 app.use(express.json());
@@ -101,7 +103,7 @@ app.get('/api/auth/getuser',async (req,res)=>
     {
         let data_id = jwt.verify(token,process.env.JWTSECRET).id;
         let user = await User.findById(data_id).select('-password');
-        res.send(user); 
+        res.json(user);
     }
     catch(e)
     {
@@ -113,11 +115,58 @@ app.get('/api/auth/getuser',async (req,res)=>
 
 // notes endpoint
 
-app.get('/api/notes',(req,res)=>
+// api to add notes
+app.post('/api/addnotes',[
+    body('title','Enter a valide title').exists(),
+    body('description').exists()],async(req,res)=>
 {
-   res.send('notes');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let token = req.query.token;
+    try
+    {
+        let data_id = jwt.verify(token,process.env.JWTSECRET).id;
+        let note = Notes(
+            {
+                user:data_id,
+                title:req.body.title,
+                description:req.body.description,
+                tag:req.body.tag,
+                
+            })  
+        note.save().then(()=>
+        {
+            res.send('data saved');
+        })
+        .catch(e=>
+            {
+                res.status(500).json({error:e})
+            }) 
+    }
+    catch(e)
+    {
+       res.status(401).json({message:e});
+    }
 })
 
+// api to all notes of a single user
+app.get('/api/fetchdata',async (req,res)=>
+{
+    let token = req.query.token;
+    try
+    {
+        let data_id = jwt.verify(token,process.env.JWTSECRET).id;
+        let userNotes = await Notes.find({user:data_id});
+        res.send(userNotes);
+    }
+    catch(e)
+    {
+       res.status(401).json({message:e});
+    }
+})
 
 // api port
 app.listen(process.env.PORT,()=>
