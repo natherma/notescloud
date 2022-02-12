@@ -22,6 +22,7 @@ dbConnect();
 // requiring mongodb module
 const User = require('./modules/Users');
 const Notes = require('./modules/Notes');
+const { json } = require('express');
 
 
 // middleware
@@ -167,6 +168,67 @@ app.get('/api/fetchdata',async (req,res)=>
        res.status(401).json({message:e});
     }
 })
+
+
+// api to update notes
+app.put('/api/updatenotes/:id/',async(req,res)=>
+{
+    let token = req.query.token;
+    let data_id = jwt.verify(token,process.env.JWTSECRET).id;
+    let note_id = req.params.id;
+    let note = await Notes.findById(note_id);
+    if(note.user.toString()===data_id)
+    {
+       try
+       {
+        let newNote = await Notes.findByIdAndUpdate(note_id,{
+            title:req.body.title,
+            description:req.body.description,
+            tag:req.body.tag
+        },{new:true});
+        res.send('updated');
+       }
+       catch(erroe)
+       {
+          res.status(500).json({error:erroe});
+
+       }
+    }
+    else
+    {
+        res.status(401).json({erroe:'unauthorised'});
+    }
+})
+
+// api to delete notes
+app.delete('/api/deletenote/:id/',async(req,res)=>
+{
+    let token = req.query.token;
+    let data_id = jwt.verify(token,process.env.JWTSECRET).id;
+    let note_id = req.params.id;
+    let note = await Notes.findById(note_id);
+    if(note.user.toString()===data_id)
+    {
+       try
+       {
+        let newNote = await Notes.findByIdAndDelete(note_id);
+        res.send('deleted');
+       }
+       catch(erroe)
+       {
+          res.status(500).json({error:erroe});
+          
+       }
+    }
+    else
+    {
+        res.status(401).json({erroe:'unauthorised'});
+    }
+})
+
+
+
+
 
 // api port
 app.listen(process.env.PORT,()=>
