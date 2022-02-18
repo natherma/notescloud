@@ -1,10 +1,13 @@
-import React,{useContext} from 'react'
+import React,{useContext,useEffect} from 'react'
 import Notescontext from '../../context/notes/Notescontext'
 
 export default function Home() {
-  let {logStatus,setLogStatus} = useContext(Notescontext);
-  console.log(logStatus,setLogStatus)
+  let {logStatus,setLogStatus,fetchNotes,notes,setNotes} = useContext(Notescontext);
+  useEffect(()=>{
+    fetchNotes();
+    console.log(notes)
+  },[])
   return (
-    <div>Home</div>
+    <div>Home </div>
   )
 }

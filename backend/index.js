@@ -2,6 +2,9 @@
 let express = require('express');
 let app = express();
 
+// requiring cors 
+let cors = require('cors');
+
 // requiring dotenv for using env variable
 require('dotenv').config();
 
@@ -27,6 +30,7 @@ const { json } = require('express');
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 // End points of our App
 
