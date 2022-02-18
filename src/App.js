@@ -7,21 +7,24 @@ import {
 } from "react-router-dom";
 import Home from './components/main/Home';
 import About from './components/main/About';
+import NotesState from './context/notes/NotesState';
+import SignIn from './components/main/SignIn' 
 
 function App() {
   return (
     <>
+      <NotesState>
       <Router>
       <header>
          <Navbar />
       </header>
       <Routes>
+      <Route exact path = '/signin' element={<SignIn />}></Route>
         <Route exact path = '/' element={<Home />}></Route>
-      </Routes>
-      <Routes>
         <Route exact path = '/AboutUs' element={<About />}></Route>
       </Routes>
       </Router>
+      </NotesState>
     </>
   );
 }
