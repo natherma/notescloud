@@ -9,6 +9,7 @@ import Home from './components/main/Home';
 import About from './components/main/About';
 import NotesState from './context/notes/NotesState';
 import SignIn from './components/main/SignIn' 
+import AddNotes from './components/main/AddNotes'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route exact path = '/signin' element={<SignIn />}></Route>
         <Route exact path = '/' element={<Home />}></Route>
         <Route exact path = '/AboutUs' element={<About />}></Route>
+        <Route exact path = '/Add-Notes' element={<AddNotes />}></Route>
       </Routes>
       </Router>
       </NotesState>

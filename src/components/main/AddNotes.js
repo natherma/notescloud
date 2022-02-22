@@ -2,7 +2,11 @@ import React from 'react'
 
 function AddNotes() {
   return (
-    <div>AddNotes</div>
+    <div className='container mt-4'>
+      <h1>
+        Add Notes
+      </h1>
+    </div>
   )
 }
 

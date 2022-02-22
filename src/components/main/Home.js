@@ -5,9 +5,12 @@ export default function Home() {
   let {logStatus,setLogStatus,fetchNotes,notes,setNotes} = useContext(Notescontext);
   useEffect(()=>{
     fetchNotes();
-    console.log(notes)
   },[])
   return (
-    <div>Home </div>
+    <div className='container mt-4'>
+    <h1>
+      All Notes
+    </h1>
+  </div>
   )
 }

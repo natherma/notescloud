@@ -20,10 +20,13 @@ export default function Navbar() {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <Link className={`nav-link ${location.pathname==='/'?'active':""}`} aria-current="page" to="/">Home</Link>
+          <Link className={`nav-link ${location.pathname==='/'?'active':""}`} aria-current="page" to="/">Notes</Link>
         </li>
         <li className="nav-item">
-          <Link className={`nav-link ${location.pathname==='/AboutUs'?'active':""}`} to="/AboutUs">About Us</Link>
+          <Link className={`nav-link ${location.pathname==='/Add-Notes'?'active':""}`} to="/Add-Notes">AddNotes</Link>
+        </li>
+        <li className="nav-item">
+          <Link className={`nav-link ${location.pathname==='/AboutUs'?'active':""}`} to="/AboutUs">AboutUs</Link>
         </li>
       </ul>
       <form className="d-flex">
