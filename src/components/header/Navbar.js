@@ -1,11 +1,12 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useContext} from 'react'
 import {
    Link,useLocation
   } from "react-router-dom";
-
+import Notescontext from '../../context/notes/Notescontext'
 
 export default function Navbar() {
   let location = useLocation();
+  let {token} = useContext(Notescontext); 
   useEffect(()=>
   {
 
@@ -30,7 +31,7 @@ export default function Navbar() {
         </li>
       </ul>
       <form className="d-flex">
-          <Link className='btn btn-outline-info' to="/signin">Sign In</Link>
+         <Link className='btn btn-outline-info' to="/signin">Sign In</Link>
       </form>
     </div>
   </div>
