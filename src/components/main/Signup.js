@@ -46,16 +46,16 @@ export default function Signup() {
         <form onSubmit={signup} className='bg-dark px-3 py-5'>
   <div className="form-group">
     <label htmlFor="exampleInputEmail1">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required />
     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div className="form-group">
     <label htmlFor="exampleInputusername1">Username</label>
-    <input type="text" className="form-control" id="exampleInputusername1" placeholder="username" />
+    <input type="text" className="form-control" id="exampleInputusername1" placeholder="username" required/>
   </div>
   <div className="form-group">
     <label htmlFor="exampleInputPassword1">Password</label>
-    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" required/>
   </div>
   <button type="submit" className="btn btn-outline-info  mt-3">Sign up</button>
 </form>
