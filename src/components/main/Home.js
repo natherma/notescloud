@@ -15,20 +15,20 @@ export default function Home() {
            })
       })
     }
-  },[token,notes])
+  },[token],[notes])
   if(token)
   {
    return(
-     <>
+     <div className="cardContainer">
      {
        notes.map((item)=>
        {
-         return <div key={item.id}>
-           {<Notescomp data={item} key={item.id}/>}
+         return <div key={item._id}>
+           {<Notescomp data={item} key={item._id}/>}
          </div>
        })
      }
-     </>
+     </div>
    )
   }
   else
