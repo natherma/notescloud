@@ -1,9 +1,10 @@
-import React,{useContext,useEffect} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import Notescontext from '../../context/notes/Notescontext'
 import Notescomp from './subelements/Notescomp';
 
 export default function Home() {
-  let {token,setNotes,Notes,notes,host} = useContext(Notescontext);
+  let {token,host} = useContext(Notescontext);
+  let [notes,setNotes]   = useState([]);
   useEffect(()=>{
     if(token)
     {
@@ -15,7 +16,8 @@ export default function Home() {
            })
       })
     }
-  },[token],[notes])
+  },[notes])
+  
   if(token)
   {
    return(

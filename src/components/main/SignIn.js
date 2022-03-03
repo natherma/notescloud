@@ -3,7 +3,7 @@ import Notescontext from '../../context/notes/Notescontext'
 import { Link } from 'react-router-dom';
 
 function SignIn() {
-  let {setToken,host} = useContext(Notescontext);
+  let {setToken,host,setLogStatus} = useContext(Notescontext);
   let logIn = async(e)=>
      {
        
@@ -38,11 +38,20 @@ function SignIn() {
             response.json().then(data =>
               {
                 setToken(data.token);
+                setLogStatus(true);
+                document.querySelector('.alert').style.display = 'block'
+                setTimeout(() => {
+                  document.querySelector('.alert').style.display = 'none'
+                },1000);
               })
          })
          
      }
   return (
+    <>
+    <div className="alert alert-info" role="alert" style={{display:"none"}}>
+    you are loged in,Welcome back user
+  </div>
     <main className='loginPage'>
         <div className='loginForm'>
         <form onSubmit={logIn} className='bg-dark px-3 py-5'>
@@ -60,6 +69,7 @@ function SignIn() {
 </form>
         </div>
     </main>
+    </>
   )
 }
 

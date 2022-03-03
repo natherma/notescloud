@@ -6,11 +6,16 @@ import Notescontext from '../../context/notes/Notescontext'
 
 export default function Navbar() {
   let location = useLocation();
-  let {token} = useContext(Notescontext); 
+  let {logStatus,setLogStatus,setToken} = useContext(Notescontext); 
   useEffect(()=>
   {
 
-  },[location])
+  },[location,logStatus])
+  let logOut = ()=>
+  {
+    setLogStatus(false)
+    setToken('')
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   <div className="container-fluid">
@@ -31,7 +36,10 @@ export default function Navbar() {
         </li>
       </ul>
       <form className="d-flex">
-         <Link className='btn btn-outline-info' to="/signin">Sign In</Link>
+         <Link className={`btn btn-outline-info mx-1 my-3 ${logStatus?'disabled':''} `} to="/signin">Sign In</Link>
+      </form>
+      <form className="d-flex">
+         <button className={`btn btn-outline-danger mx-1 my-3 ${logStatus?'':'disabled'} `} onClick={logOut}>Log out</button>
       </form>
     </div>
   </div>
